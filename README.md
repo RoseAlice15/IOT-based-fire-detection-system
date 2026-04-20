@@ -1,60 +1,68 @@
-IoT-Based Fire Detection System
+Fire Detection System using NodeMCU and Blynk
 Overview
+This project is an IoT-based Fire Detection System built using NodeMCU (ESP8266) and the Blynk app. It detects fire using a flame sensor and gas sensor, and sends real-time alerts to the user.
 
-This project is an IoT-based Fire Detection System designed to detect fire hazards using smoke, gas, and temperature sensors. It sends real-time alerts to users through a mobile app or web interface using Wi-Fi-enabled microcontrollers like ESP8266/ESP32.
+When fire or gas leakage is detected:
 
-Features
-Real-time fire detection
-Temperature monitoring
-Smoke and gas detection
-Instant alerts via mobile/web
-Wi-Fi connectivity (IoT enabled)
-Low cost and energy efficient
-Technologies Used
-Arduino / ESP8266 / ESP32
-Embedded C / Arduino IDE
-Blynk / Firebase / MQTT
-Sensors (MQ-2, DHT11, Flame Sensor)
+LED turns ON
+Buzzer sounds
+Notification is sent via Blynk app
 Components Required
-ESP8266 / ESP32
-MQ-2 Gas Sensor
-DHT11 Temperature Sensor
+NodeMCU (ESP8266)
 Flame Sensor
+Gas Sensor (MQ series)
+LED
 Buzzer
 Jumper Wires
 Breadboard
-Working Principle
+Pin Configuration
+Component	NodeMCU Pin
+Flame Sensor	D2
+Gas Sensor	A0
+LED	D7
+Buzzer	D5
+Blynk Setup
+Create a project in Blynk IoT
 
-The system continuously monitors environmental conditions using sensors. If abnormal values (high temperature, smoke, or gas) are detected:
+Add widgets:
 
-Data is processed by the microcontroller
-Alert is triggered via buzzer
-Notification is sent to the user via IoT platform
-Project Diagram
+V0 → LED Indicator (Fire Status)
+V1 → Value Display (Gas Sensor)
+Create an event named: fire_alert
 
-Start
-↓
-Initialize ESP8266 and Sensors
-↓
-Connect to Wi-Fi
-↓
-Connect to Blynk Cloud
-↓
-Read Flame Sensor Data
-↓
-Read Gas Sensor Data
-↓
-Flame or Gas Detected?
-↓
+Add your Template ID and Auth Token in the code
 
-Yes → Turn ON LED → Activate Buzzer → Send Alert to Blynk App → Update Monitoring → Repeat
+Code Explanation
+flamePin: Detects fire (LOW = fire detected)
+gasPin: Reads gas value using analog input
+Blynk.virtualWrite(V1, gasValue): Sends gas data to the app
+Blynk.logEvent(): Sends alert notification
+Detection Logic
+if (flame == LOW || gasValue > 400)
+If flame is detected or gas value crosses the threshold, the system triggers an alert.
 
-No → Keep LED & Buzzer OFF → Repeat
+Features
+Real-time monitoring using Blynk
+Instant mobile notifications
+Dual detection using flame and gas sensors
+Simple and low-cost solution
+Working
+The system continuously reads sensor values
 
+If fire or gas is detected:
 
-License
+LED turns ON
+Buzzer turns ON
+Alert is sent to the mobile app
+Otherwise, the system stays in normal state
 
-This project is open-source and available under the MIT License.
-
+Future Improvements
+Add temperature sensor (DHT11 or DHT22)
+Add SMS alert using GSM module
+Integrate automatic fire suppression system
+Improve threshold calibration
 Author
 Rose Alice Ekka
+
+License
+This project is open-source and free for educational use.
